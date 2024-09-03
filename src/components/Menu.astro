@@ -1,0 +1,168 @@
+---
+import iconMenu from "../assets/icon_menu.png";
+import iconWhat from "../assets/icon_whatsap.png";
+import iconFace from "../assets/icon_faceb.png";
+---
+
+<nav class="bg-[#686836] h-full left-0 fixed top-0 flex">
+    <!-- Menú cerrado -->
+    <div class="btn-menu w-14 p-2 flex flex-col justify-between">
+        <img src={iconMenu.src} alt="icono de menú" class="menu-icon">
+        <span class="title-menu text-base uppercase">Grupo de Negocios Coorporativos Comerciales</span>
+        <div class="flex flex-col">
+            <img src={iconWhat.src} alt="">
+            <img src={iconFace.src} alt="">
+        </div>
+    </div>
+    <!-- Menú abierto -->
+    <div class="categorias bg-[#555] z-10 pt-4">
+        <h2 class="px-2 text-3xl bg-slate-600 rounded-2xl text-center uppercase">Productos</h2>
+        <ul class="p-2">
+            <li>
+                <span class="toggle-catg-hard text-2xl">Hardware</span>
+                <ul class="catg-hard ml-2">
+                    <li>Servidores</li>
+                    <li>Equipos de Cómputo</li>
+                    <li>Periféricos y Accesorios</li>
+                    <li>Redes y Conectividad</li>
+                    <li>Almacenamiento</li>
+                    <li>Estabilizadores y UPS</li>
+                </ul>
+            </li>
+            <li>
+                <span class="toggle-catg-comp text-2xl">Componentes</span>
+                <ul class="catg-comp ml-2">
+                    <li>Discos Duros</li>
+                    <li>Memorias</li>
+                    <li>Partes de PC</li>
+                    <li>Motherboards</li>
+                </ul>
+            </li>
+            <li>
+                <span class="toggle-catg-soft text-2xl">Software</span>
+                <ul class="catg-soft ml-2">
+                    <li>Sistemas Operativos</li>
+                    <li>Office</li>
+                    <li>Antivirus</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const btnNav = document.querySelector('.btn-menu');
+        const categorias = document.querySelector('.categorias');
+        const toggleCatgSoft = document.querySelector('.toggle-catg-soft');
+        const catgSoft = document.querySelector('.catg-soft');
+        const toggleCatgComp = document.querySelector('.toggle-catg-comp');
+        const catgComp = document.querySelector('.catg-comp');
+        const toggleCatgHard = document.querySelector('.toggle-catg-hard');
+        const catgHard = document.querySelector('.catg-hard');
+
+        if (btnNav && categorias) {
+            btnNav.addEventListener('click', () => {
+                if (categorias.classList.contains('expanded')) {
+                    // Close menu and reset all sub-menus
+                    categorias.classList.remove('expanded');
+                    closeAllSubmenus();
+                } else {
+                    // Open menu
+                    categorias.classList.add('expanded');
+                }
+            });
+        }
+
+        if (toggleCatgSoft && catgSoft) {
+            toggleCatgSoft.addEventListener('click', () => {
+                catgSoft.classList.toggle('show');
+            });
+        }
+
+        if (toggleCatgComp && catgComp) {
+            toggleCatgComp.addEventListener('click', () => {
+                catgComp.classList.toggle('show');
+            });
+        }
+
+        if (toggleCatgHard && catgHard) {
+            toggleCatgHard.addEventListener('click', () => {
+                catgHard.classList.toggle('show');
+            });
+        }
+
+        function closeAllSubmenus() {
+            const submenus = [catgSoft, catgComp, catgHard];
+            submenus.forEach(menu => {
+                if (menu) {
+                    menu.classList.remove('show');
+                }
+            });
+        }
+    });
+</script>
+
+<style>
+.menu-icon{
+    cursor: pointer;
+    padding: 8px;
+    background-color: #fff;
+    border-radius: 32px;
+}
+.categorias {
+    width: 0;
+    overflow: hidden;
+    transition: width 0.3s ease-in-out, height 0.3s ease-in-out; /* Transiciones suaves */
+    position: fixed; /* Asegura que el menú se mantenga fijo */
+    top: 0; /* Posiciona el menú en la parte superior */
+    left: 56px; /* Posiciona el menú en el lado izquierdo */
+    z-index: 999; /* Asegura que el menú esté sobre otros contenidos */
+    height: 100%;
+}
+
+.categorias.expanded {
+    width: 250px; /* Ancho expandido del bloque de categorías */
+    height: 100%;
+}
+
+.catg-soft,
+.catg-comp,
+.catg-hard {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out; /* Transición suave para el despliegue */
+}
+
+.catg-soft.show,
+.catg-comp.show,
+.catg-hard.show {
+    max-height: 200px; /* Ajusta el valor según la altura esperada del contenido */
+}
+
+.toggle-catg-comp:hover {
+    background-color: blueviolet;
+    cursor: pointer;
+}
+
+.toggle-catg-soft:hover {
+    background-color: aqua;
+    cursor: pointer;
+}
+
+.toggle-catg-hard:hover {
+    background-color: lightcoral; /* Cambia el color según tu preferencia */
+    cursor: pointer;
+}
+
+.title-menu {
+    display: flex; /* Asegura que la transformación funcione correctamente */
+    writing-mode: vertical-rl; /* Escribe el texto verticalmente de arriba hacia abajo */
+    transform: rotate(180deg); /* Rota el texto 180 grados para corregir la dirección */
+    /* Opcional: Ajusta la alineación y el punto de origen de la rotación */
+    transform-origin: center; /* Ajusta el punto de rotación si es necesario */
+    text-align: center; /* Alinea el texto al centro si es necesario */
+    align-items: center;
+    font-weight: bold;
+}
+</style>
